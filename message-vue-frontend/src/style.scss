@@ -1,0 +1,11 @@
+@import './sass/colors.scss';
+@import './sass/fonts.scss';
+
+*{
+    font-family: 'Rubik', sans-serif;
+}
+
+body{
+    background-color: $black-bg;
+    color: $black-bg-text;
+}
