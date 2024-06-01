@@ -1,0 +1,50 @@
+NOTE: The following database schema design is likely NOT how Apple's iMessage app is structured.
+This is just how I would go about implementing something similar given the limited knowledge and technology I have.
+
+ALSO NOTE: The tables below only deal with messages. I am not to the point of implementing multimedia content yet.
+
+-=-=-=-=-= users table =-=-=-=-=-
++----+------------+-----------+---------------+---------------+
+| id | first_name | last_name | password_hash | registered_at |
++----+------------+-----------+---------------+---------------+
+
+-=-=-=-=-= keys table =-=-=-=-=-
++----+---------+------------+-------------+
+| id | user_id | public_key | private_key |
++----+---------+------------+-------------+
+
+-=-=-=-=-= user contacts table =-=-=-=-=-
++----+-----------+-----------+
+| id | source_id | target_id |
++----+-----------+-----------+
+
+-=-=-=-=-= messages table =-=-=-=-=-
++----+-----------+--------------+---------+------------+------------+
+| id | sender_id | recipient_id | message | created_at | updated_at |
++----+-----------+--------------+---------+------------+------------+
+
+-=-=-=-=-= groups table =-=-=-=-=-
++----+------+
+| id | name |
++----+------+
+
+-=-=-=-=-= group members table =-=-=-=-=-
++----+----------+---------+
+| id | group_id | user_id |
++----+----------+---------+
+
+-=-=-=-=-= group messages table =-=-=-=-=-
++----+-----------+----------+---------+------------+------------+
+| id | sender_id | group_id | message | created_at | updated_at |
++----+-----------+----------+---------+------------+------------+
+
+-=-=-=-=-= emojis table =-=-=-=-=-
++----+---------------------+---------+
+| id | text_representation | unicode |
++----+---------------------+---------+
+
+-=-=-=-=-= reactions table =-=-=-=-=-
++----+------------+----------+
+| id | message_id | emoji_id |
++----+------------+----------+
+
