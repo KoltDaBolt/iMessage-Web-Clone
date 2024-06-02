@@ -6,16 +6,26 @@
     import Divider from 'primevue/divider';
     import Button from 'primevue/button';
     import { reactive } from 'vue';
-    import type User from '@/models/User';
+    import { newUserSchema } from '@/validations/NewUserValidation'
 
-    const newUser: User = reactive({
-        id: null,
-        first_name: "",
-        last_name: "",
+    const signupFormData = reactive({
+        firstName: "",
+        lastName: "",
         username: "",
-        password_hash: "",
-        registered_at: null
+        password: ""
     })
+
+    const submitSignupForm = () => {
+        newUserSchema.validate(signupFormData, { abortEarly: false })
+            .then((validSignupFormData) => {
+                console.log(validSignupFormData)
+            })
+            .catch((err: any) => {
+                err.inner.forEach((error: { path: string, message: string; }) => {
+                    console.log("Invalid Field: " + error.path + " | Error Message: " + error.message)
+                });
+            })
+    }
 </script>
 
 <template>
@@ -25,19 +35,19 @@
         <template #content>
             <FloatLabel class="floatlabel-margin">
                 <label for="username">First Name</label>
-                <InputText id="username" v-model="newUser.first_name" />
+                <InputText id="username" v-model="signupFormData.firstName" />
             </FloatLabel>
             <FloatLabel class="floatlabel-margin">
                 <label for="username">Last Name</label>
-                <InputText id="username" v-model="newUser.last_name" />
+                <InputText id="username" v-model="signupFormData.lastName" />
             </FloatLabel>
             <FloatLabel class="floatlabel-margin">
                 <label for="username">Username</label>
-                <InputText id="username" v-model="newUser.username" />
+                <InputText id="username" v-model="signupFormData.username" />
             </FloatLabel>
             <FloatLabel class="floatlabel-margin">
                 <label for="password">Password</label>
-                <Password id="password" v-model="newUser.password_hash">
+                <Password id="password" v-model="signupFormData.password">
                     <template #footer>
                         <Divider />
                         <p class="mt-2">Requirements</p>
@@ -56,7 +66,7 @@
                 <RouterLink to="/login">
                     <Button label="Back to Login" severity="info" outlined />
                 </RouterLink>
-                <Button label="Join Now" severity="info" />
+                <Button label="Join Now" severity="info" @click.prevent="submitSignupForm()" />
             </div>
         </template>
     </Card>
