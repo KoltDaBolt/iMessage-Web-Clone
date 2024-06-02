@@ -9,8 +9,6 @@ Basically, the username is this app's equivalent of a phone number or email bein
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(50),
-    last_name VARCHAR(50),
     username VARCHAR(50) UNIQUE,
     password_hash VARCHAR(255),
     registered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -28,6 +26,8 @@ CREATE TABLE user_contacts (
     id INT AUTO_INCREMENT PRIMARY KEY,
     source_id INT,
     target_id INT,
+    target_firstname VARCHAR(50),
+    target_lastname VARCHAR(50),
     FOREIGN KEY (source_id) REFERENCES users(id),
     FOREIGN KEY (target_id) REFERENCES users(id),
     UNIQUE (source_id, target_id)

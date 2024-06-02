@@ -4,9 +4,9 @@ This is just how I would go about implementing something similar given the limit
 ALSO NOTE: The tables below only deal with messages. I am not to the point of implementing multimedia content yet.
 
 -=-=-=-=-= users table =-=-=-=-=-
-+----+------------+-----------+---------------+---------------+
-| id | first_name | last_name | password_hash | registered_at |
-+----+------------+-----------+---------------+---------------+
++----+----------+---------------+---------------+
+| id | username | password_hash | registered_at |
++----+----------+---------------+---------------+
 
 -=-=-=-=-= keys table =-=-=-=-=-
 +----+---------+------------+-------------+
@@ -14,9 +14,9 @@ ALSO NOTE: The tables below only deal with messages. I am not to the point of im
 +----+---------+------------+-------------+
 
 -=-=-=-=-= user contacts table =-=-=-=-=-
-+----+-----------+-----------+
-| id | source_id | target_id |
-+----+-----------+-----------+
++----+-----------+-----------+------------------+-----------------+
+| id | source_id | target_id | target_firstname | target_lastname |
++----+-----------+-----------+------------------+-----------------+
 
 -=-=-=-=-= messages table =-=-=-=-=-
 +----+-----------+--------------+---------+------------+------------+

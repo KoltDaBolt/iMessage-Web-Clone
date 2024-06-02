@@ -9,3 +9,13 @@ body{
     background-color: $black-bg;
     color: $black-bg-text;
 }
+
+.card{
+    background-color: $dark-black-bg;
+    width: 20rem;
+    overflow: hidden;
+}
+
+.floatlabel-margin{
+    margin-top: 2rem;
+}
