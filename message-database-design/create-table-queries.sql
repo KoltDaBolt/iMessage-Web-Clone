@@ -1,8 +1,8 @@
 /*
 This file is to display the queries used to create the different tables in MariaDB.
 
-Note: In the users table, the first_name and last_name are the displayed names in the application.
-The username is the unique identifier of the user in the system.
+Note: In the user_contacts table, the first_name and last_name are the displayed names in the application.
+The username (in the users table) is the unique identifier of the user in the system.
 So, when you want to create a contact with someone, you would search for their username.
 Basically, the username is this app's equivalent of a phone number or email being the unique identifier of a device in iMessage.
 */
