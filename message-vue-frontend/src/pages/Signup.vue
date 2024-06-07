@@ -1,12 +1,14 @@
 <script setup lang="ts">
-    import Card from 'primevue/card';
+    // import Card from 'primevue/card';
     import FloatLabel from 'primevue/floatlabel';
     import InputText from 'primevue/inputtext';
     import Password from 'primevue/password';
     import Divider from 'primevue/divider';
     import Button from 'primevue/button';
-    import { reactive } from 'vue';
-    import { newUserSchema } from '@/validations/NewUserValidation'
+    import { reactive, ref } from 'vue';
+    import { newUserSchema } from '@/validations/NewUserValidation';
+    import argon2 from 'argon2';
+    import api from '@/api/api';
 
     const signupFormData = reactive({
         firstName: "",
@@ -15,24 +17,36 @@
         password: ""
     })
 
+    const errors = ref(false)
+
+    const hashPassword = async (password: string): Promise<string> => {
+        const hash = await argon2.hash(password, { type: argon2.argon2id });
+        return hash;
+    }
+
     const submitSignupForm = () => {
         newUserSchema.validate(signupFormData, { abortEarly: false })
-            .then((validSignupFormData) => {
-                console.log(validSignupFormData)
+            .then(async (validSignupFormData) => {
+                let passwordHash = await hashPassword(validSignupFormData.password)
+                validSignupFormData.password = passwordHash
+
+                await api.user.register(validSignupFormData)
             })
             .catch((err: any) => {
-                err.inner.forEach((error: { path: string, message: string; }) => {
-                    console.log("Invalid Field: " + error.path + " | Error Message: " + error.message)
-                });
+                errors.value = true
+                // err.inner.forEach((error: { path: string, message: string; }) => {
+                //     console.log("Invalid Field: " + error.path + " | Error Message: " + error.message)
+                // });
+
             })
     }
 </script>
 
 <template>
-    <Card class="card">
-        <template #title>Sign Up</template>
-        <template #subtitle></template>
-        <template #content>
+    <!-- <Card class="card"> -->
+        <!-- <template #title>Sign Up</template> -->
+        <!-- <template #content> -->
+            <h1>Sign Up</h1>
             <FloatLabel class="floatlabel-margin">
                 <label for="username">First Name</label>
                 <InputText id="username" v-model="signupFormData.firstName" />
@@ -60,14 +74,15 @@
                     </template>
                 </Password>
             </FloatLabel>
-        </template>
-        <template #footer>
-            <div>
+        <!-- </template> -->
+        <!-- <template #footer> -->
+            <div class="floatlabel-margin">
                 <RouterLink to="/login">
                     <Button label="Back to Login" severity="info" outlined />
                 </RouterLink>
                 <Button label="Join Now" severity="info" @click.prevent="submitSignupForm()" />
             </div>
-        </template>
-    </Card>
+        <!-- </template> -->
+    <!-- </Card> -->
+    <p style="color: red;" v-if="errors">There are errors. Messages will be printed later.</p>
 </template>

@@ -8,13 +8,19 @@
 body{
     background-color: $black-bg;
     color: $black-bg-text;
+    margin: 0;
+    // width: 100vw;
+    // height: 100vh;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
 }
 
-.card{
-    background-color: $dark-black-bg;
-    width: 20rem;
-    overflow: hidden;
-}
+// .card{
+//     background-color: $dark-black-bg;
+//     width: 20rem;
+//     overflow: hidden;
+// }
 
 .floatlabel-margin{
     margin-top: 2rem;
