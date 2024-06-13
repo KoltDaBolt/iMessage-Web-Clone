@@ -13,7 +13,7 @@ class MariaDBConfig{
     @Bean
     fun dataSource(): DataSource{
         val dataSource = MariaDbDataSource()
-        dataSource.url = "jdbc:mariadb://localhost:3306/messagedb?useSSL=false&allowPublicKeyRetrieval=true"
+        dataSource.setUrl("jdbc:mariadb://localhost:3306/messagedb?useSSL=false&allowPublicKeyRetrieval=true")
         dataSource.user = "user-message-api"
         dataSource.setPassword("user-message-api-password")
 
