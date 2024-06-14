@@ -23,7 +23,7 @@ class UserService(
         return try{
             val newUserId = userDao.addUser(newUser.username, newUser.password)
 
-            userContactsDao.createContact(newUserId, newUserId, newUser.firstname, newUser.firstname)
+            userContactsDao.createContact(newUserId, newUserId, newUser.firstname, newUser.lastname)
             generateKeyPair(newUserId)
         }catch(e: DuplicateUsernameException){
             throw DuplicateUsernameException("Username ${newUser.username} is unavailable. Please pick another.")
