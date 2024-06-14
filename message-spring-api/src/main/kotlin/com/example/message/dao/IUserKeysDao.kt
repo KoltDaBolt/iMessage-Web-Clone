@@ -1,7 +1,7 @@
 package com.example.message.dao
 
-import com.example.message.domain.UserKeyPair
+import com.example.message.dto.UserKeyPair
 
 interface IUserKeysDao{
-    fun generateKeyPair(userId: Int): UserKeyPair
+    fun saveKeyPair(userId: Int, publicKey: String, privateKey: String): UserKeyPair
 }

@@ -1,4 +1,4 @@
-package com.example.message.domain
+package com.example.message.dto
 
 data class UserKeyPair(
     val userId: Int,
