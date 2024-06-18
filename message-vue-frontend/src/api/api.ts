@@ -1,6 +1,8 @@
 import axios from 'axios';
 import Config from '../config.json';
-import type SignupFormData from '@/models/SignupFormData';
+import type UserSignupFormData from '@/models/UserSignupFormData';
+import type User from '@/models/User';
+import type UserLoginCredentials from '@/models/UserLoginCredentials';
 
 class Api{
     readonly apiRoot: string;
@@ -11,14 +13,20 @@ class Api{
 
     user = ((self: Api) => {
         let result = {
-            register(signupFormData: SignupFormData){
-                let address = self.apiRoot + '/user/register'
+            getLoginCredentials(username: String): Promise<UserLoginCredentials>{
+                let address = self.apiRoot + `/user/register/${username}`;
+                return axios
+                    .get(address)
+                    .then((resp) => resp.data as UserLoginCredentials)
+            },
+            register(signupFormData: UserSignupFormData): Promise<User>{
+                let address = self.apiRoot + '/user/register';
                 return axios
                     .post(address, signupFormData)
-                    .then()
+                    .then((resp) => resp.data as User);
             }
-        }
-        return result
+        };
+        return result;
     })(this);
 }
 

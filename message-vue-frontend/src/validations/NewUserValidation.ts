@@ -1,10 +1,10 @@
 import * as yup from 'yup';
 
 export const newUserSchema = yup.object({
-    firstName: yup.string()
+    firstname: yup.string()
         .max(50, "First name can have a max of 50 characters")
         .required("First name is required"),
-    lastName: yup.string()
+    lastname: yup.string()
         .max(50, "Last name can have a max of 50 characters")
         .required("Last name is required"),
     username: yup.string()

@@ -4,6 +4,6 @@ data class User(
     val username: String,
     val firstname: String,
     val lastname: String,
-    val publicKey: String,
-    val privateKey: String
+    val publicKey: String?,
+    val privateKey: String?
 )
