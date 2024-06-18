@@ -18,6 +18,7 @@ class Api{
                     .then()
             }
         }
+        return result
     })(this);
 }
 

@@ -1,6 +1,6 @@
 package com.example.message.dto
 
-data class NewUser(
+data class UserSignupFormData(
     val firstname: String,
     val lastname: String,
     val username: String,

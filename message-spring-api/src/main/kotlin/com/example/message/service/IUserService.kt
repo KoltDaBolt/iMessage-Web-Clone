@@ -1,8 +1,10 @@
 package com.example.message.service
 
-import com.example.message.dto.NewUser
-import com.example.message.dto.UserKeyPair
+import com.example.message.dto.UserSignupFormData
+import com.example.message.dto.User
+import com.example.message.dto.UserLoginCredentials
 
 interface IUserService{
-    fun registerUser(newUser: NewUser): UserKeyPair
+    fun getLoginCredentials(username: String): UserLoginCredentials
+    fun registerUser(newUser: UserSignupFormData): User
 }

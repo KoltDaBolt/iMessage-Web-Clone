@@ -3,8 +3,9 @@ package com.example.message.service
 import com.example.message.dao.IUserContactsDao
 import com.example.message.dao.IUserDao
 import com.example.message.dao.IUserKeysDao
-import com.example.message.dto.NewUser
-import com.example.message.dto.UserKeyPair
+import com.example.message.dto.UserSignupFormData
+import com.example.message.dto.User
+import com.example.message.dto.UserLoginCredentials
 import com.example.message.exception.DuplicateContactsException
 import com.example.message.exception.DuplicateUsernameException
 import com.example.message.exception.GenericException
@@ -18,8 +19,16 @@ class UserService(
     private val userContactsDao: IUserContactsDao,
     private val userKeysDao: IUserKeysDao
 ): IUserService{
+    override fun getLoginCredentials(username: String): UserLoginCredentials{
+        try{
+            return userDao.getLoginCredentials(username)
+        }catch(e: Exception){
+            throw GenericException("An unexpected error has occurred!")
+        }
+    }
+
     @Transactional
-    override fun registerUser(newUser: NewUser): UserKeyPair{
+    override fun registerUser(newUser: UserSignupFormData): User{
         return try{
             val newUserId = userDao.addUser(newUser.username, newUser.password)
 
@@ -34,7 +43,7 @@ class UserService(
         }
     }
 
-    private fun generateKeyPair(userId: Int): UserKeyPair{
+    private fun generateKeyPair(userId: Int): User{
         val keyPairGenerator = KeyPairGenerator.getInstance("RSA")
         keyPairGenerator.initialize(2048)
         val keyPair = keyPairGenerator.generateKeyPair()
