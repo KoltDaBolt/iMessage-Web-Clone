@@ -47,4 +47,3 @@
 
     <p style="color: red;" v-if="errors">{{ errors }}</p>
 </template>
-  
