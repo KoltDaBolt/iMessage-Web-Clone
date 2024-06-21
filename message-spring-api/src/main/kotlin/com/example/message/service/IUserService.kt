@@ -7,4 +7,5 @@ import com.example.message.dto.UserLoginCredentials
 interface IUserService{
     fun getLoginCredentials(username: String): UserLoginCredentials
     fun registerUser(newUser: UserSignupFormData): User
+    fun login(username: String): User
 }

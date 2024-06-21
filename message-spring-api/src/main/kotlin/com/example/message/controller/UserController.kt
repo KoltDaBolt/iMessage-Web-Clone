@@ -29,4 +29,10 @@ class UserController(
         val userKeys: User = userService.registerUser(newUser)
         return ResponseEntity.status(HttpStatus.OK).body(userKeys)
     }
+
+    @GetMapping("/login/{username}")
+    fun login(@PathVariable username: String): ResponseEntity<User>{
+        val user: User = userService.login(username)
+        return ResponseEntity.status(HttpStatus.OK).body(user)
+    }
 }

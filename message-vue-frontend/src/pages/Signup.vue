@@ -8,10 +8,11 @@
     import { reactive, ref } from 'vue';
     import { newUserSchema } from '@/validations/NewUserValidation';
     // import argon2 from 'argon2';
-    import api from '@/api/api';
     import router from '@/router';
     import type UserSignupFormData from '@/models/UserSignupFormData';
-    import type User from '@/models/User';
+    import { useStore } from 'vuex';
+
+    const store = useStore();
 
     const signupFormData: UserSignupFormData = reactive({
         firstname: "",
@@ -34,12 +35,12 @@
                 // let passwordHash = await hashPassword(validSignupFormData.password)
                 // validSignupFormData.password = passwordHash
 
-                try{
-                    var registeredUser: User = await api.user.register(validSignupFormData);
+                var registeredUser = await store.dispatch("user/signup", validSignupFormData);
+
+                if(typeof registeredUser == "string"){
+                    apiErrors.value = registeredUser;
+                }else{
                     router.replace("/home");
-                    console.log(registeredUser);
-                }catch(err: any){
-                    apiErrors.value = err.response.data;
                 }
             })
             .catch((err: any) => {

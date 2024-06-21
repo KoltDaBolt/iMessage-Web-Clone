@@ -13,17 +13,26 @@ class Api{
 
     user = ((self: Api) => {
         let result = {
-            getLoginCredentials(username: String): Promise<UserLoginCredentials>{
+            getLoginCredentials(username: String): Promise<UserLoginCredentials | String>{
                 let address = self.apiRoot + `/user/register/${username}`;
                 return axios
                     .get(address)
                     .then((resp) => resp.data as UserLoginCredentials)
+                    .catch((err) => "There was an error with logging in.");
+            },
+            login(username: String): Promise<User | String>{
+                let address = self.apiRoot + `/user/login/${username}`;
+                return axios
+                    .get(address)
+                    .then((resp) => resp.data as User)
+                    .catch((err) => "There was an error logging in.");
             },
             register(signupFormData: UserSignupFormData): Promise<User>{
                 let address = self.apiRoot + '/user/register';
                 return axios
                     .post(address, signupFormData)
-                    .then((resp) => resp.data as User);
+                    .then((resp) => resp.data as User)
+                    .catch((err) => err.response.data);
             }
         };
         return result;

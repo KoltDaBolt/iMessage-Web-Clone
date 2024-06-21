@@ -43,4 +43,16 @@ class UserDao(val template: JdbcTemplate): IUserDao{
             throw DuplicateUsernameException("Username $username is unavailable. Please pick another.")
         }!!
     }
+
+    override fun getUserIdFromUsername(username: String): Int{
+        val query = """
+            SELECT id FROM users WHERE username = ?
+        """.trimIndent()
+
+        return template.queryForObject(
+            query,
+            { rs, _ -> rs.getInt("id") },
+            username
+        )!!
+    }
 }

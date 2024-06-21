@@ -33,7 +33,7 @@ class UserService(
             val newUserId = userDao.addUser(newUser.username, newUser.password)
 
             userContactsDao.createContact(newUserId, newUserId, newUser.firstname, newUser.lastname)
-            generateKeyPair(newUserId)
+            generateKeyPair(newUser, newUserId)
         }catch(e: DuplicateUsernameException){
             throw DuplicateUsernameException("Username ${newUser.username} is unavailable. Please pick another.")
         }catch(e: DuplicateContactsException){
@@ -43,7 +43,21 @@ class UserService(
         }
     }
 
-    private fun generateKeyPair(userId: Int): User{
+    override fun login(username: String): User{
+        val userId = userDao.getUserIdFromUsername(username)
+        val userFirstNameLastName = userContactsDao.getFirstNameLastNameFromId(userId)
+        val userKeys = userKeysDao.getKeysFromId(userId)
+
+        return User(
+            username,
+            userFirstNameLastName.firstname,
+            userFirstNameLastName.lastname,
+            userKeys.publicKey,
+            userKeys.privateKey
+        )
+    }
+
+    private fun generateKeyPair(newUser: UserSignupFormData, userId: Int): User{
         val keyPairGenerator = KeyPairGenerator.getInstance("RSA")
         keyPairGenerator.initialize(2048)
         val keyPair = keyPairGenerator.generateKeyPair()
@@ -51,6 +65,6 @@ class UserService(
         val publicKey = keyPair.public.encoded.joinToString("")
         val privateKey = keyPair.private.encoded.joinToString("")
 
-        return userKeysDao.saveKeyPair(userId, publicKey, privateKey)
+        return userKeysDao.saveKeyPair(newUser, userId, publicKey, privateKey)
     }
 }

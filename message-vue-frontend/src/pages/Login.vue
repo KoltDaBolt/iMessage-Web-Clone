@@ -3,32 +3,36 @@
     import FloatLabel from 'primevue/floatlabel';
     import Password from 'primevue/password';
     import Button from 'primevue/button';
-    import api from '@/api/api';
     import { ref } from 'vue';
-    import type UserLoginCredentials from '@/models/UserLoginCredentials';
     import router from '@/router';
+    import { useStore } from 'vuex';
+
+    const store = useStore();
 
     const username = ref("");
     const password = ref("");
     const errors = ref("");
 
     const submitLoginForm = async() => {
-        try{
-            var userCreds: UserLoginCredentials = await api.user.getLoginCredentials(username.value);
+        var userCreds = await store.dispatch("user/getLoginCredentials", username.value);
 
+        if(typeof userCreds == "string"){
+            errors.value = userCreds;
+        }else{
             if(userCreds.username == "" || userCreds.password != password.value){
                 errors.value = "Username or password is incorrect!";
             }else{
+                var userData = await store.dispatch("user/login", userCreds.username);
+                store.commit("user/setUser", userData);
                 router.replace("/home");
             }
-        }catch(err: any){
-            errors.value = err.response.data;
         }
     }
 </script>
 
 <template>
     <h1>Login</h1>
+
     <FloatLabel class="floatlabel-margin">
         <label for="username">Username</label>
         <InputText id="username" v-model="username" />
