@@ -1,8 +1,6 @@
 NOTE: The following database schema design is likely NOT how Apple's iMessage app is structured.
 This is just how I would go about implementing something similar given the limited knowledge and technology I have.
 
-ALSO NOTE: The tables below only deal with messages. I am not to the point of implementing multimedia content yet.
-
 -=-=-=-=-= users table =-=-=-=-=-
 +----+----------+---------------+---------------+
 | id | username | password_hash | registered_at |
@@ -19,21 +17,26 @@ ALSO NOTE: The tables below only deal with messages. I am not to the point of im
 +----+-----------+-----------+------------------+-----------------+
 
 -=-=-=-=-= messages table =-=-=-=-=-
-+----+-----------+--------------+---------+------------+------------+
-| id | sender_id | recipient_id | message | created_at | updated_at |
-+----+-----------+--------------+---------+------------+------------+
++----+-----------+--------------+---------+--------+------------+------------+
+| id | sender_id | recipient_id | message | status | created_at | updated_at |
++----+-----------+--------------+---------+--------+------------+------------+
+
+-=-=-=-=-= attachments table =-=-=-=-=-
++----+------------+-----------------+------------+
+| id | message_id | attachment_type | attachment |
++----+------------+-----------------+------------+
 
 -=-=-=-=-= groups table =-=-=-=-=-
 +----+------+
 | id | name |
 +----+------+
 
--=-=-=-=-= group members table =-=-=-=-=-
+-=-=-=-=-= group_members table =-=-=-=-=-
 +----+----------+---------+
 | id | group_id | user_id |
 +----+----------+---------+
 
--=-=-=-=-= group messages table =-=-=-=-=-
+-=-=-=-=-= group_messages table =-=-=-=-=-
 +----+-----------+----------+---------+------------+------------+
 | id | sender_id | group_id | message | created_at | updated_at |
 +----+-----------+----------+---------+------------+------------+
@@ -44,7 +47,7 @@ ALSO NOTE: The tables below only deal with messages. I am not to the point of im
 +----+---------------------+---------+
 
 -=-=-=-=-= reactions table =-=-=-=-=-
-+----+------------+----------+
-| id | message_id | emoji_id |
-+----+------------+----------+
++----+------------+------------+----------+
+| id | reactor_id | message_id | emoji_id |
++----+------------+------------+----------+
 
