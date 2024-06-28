@@ -8,6 +8,7 @@ export const newUserSchema = yup.object({
         .max(50, "Last name can have a max of 50 characters")
         .required("Last name is required"),
     username: yup.string()
+        .max(50, "Username can have a max of 50 characters")
         .required("Username is required"),
     password: yup.string()
         .min(8, "Password must have a minimum of 8 characters")

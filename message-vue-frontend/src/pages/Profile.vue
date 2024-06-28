@@ -11,33 +11,34 @@
     const jsonString = JSON.stringify(user);
     const tableData = ref([JSON.parse(jsonString)]);
 
-    const editingRows = ref([]);
-
-    const onRowEditSave = (event: { newData: any, index: any }) => {
-        let { newData, index } = event;
-        tableData.value[index] = newData;
-    }
+    let columns = [
+        { data: "username" },
+        { data: "firstname" },
+        { data: "lastname" },
+        {
+            data: null,
+            render(){
+                return(
+                    "<a href='/profile/edit'>Edit</a>"
+                )
+            }
+        }
+    ];
 </script>
 
 <template>
     <DataTable
-        v-model:editingRows="editingRows"
-        :value="tableData"
-        editMode="row"
-        tableStyle="width: 50rem;"
-        @row-edit-save="onRowEditSave"
+        class="display"
+        :columns="columns"
+        :data="tableData"
     >
-        <Column field="username" header="Username"></Column>
-        <Column field="firstname" header="First Name">
-            <template #editor="{ data, field }">
-                <InputText v-model="data[field]" />
-            </template>
-        </Column>
-        <Column field="lastname" header="Last Name">
-            <template #editor="{ data, field }">
-                <InputText v-model="data[field]" />
-            </template>
-        </Column>
-        <Column :rowEditor="true" style="width: 10%; min-width: 8rem;" bodyStyle="text-align:center"></Column>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th></th>
+            </tr>
+        </thead>
     </DataTable>
 </template>

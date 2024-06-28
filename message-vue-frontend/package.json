@@ -13,6 +13,7 @@
   "dependencies": {
     "argon2": "^0.40.3",
     "axios": "^1.7.2",
+    "datatables.net-vue3": "^3.0.1",
     "primevue": "^3.52.0",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",

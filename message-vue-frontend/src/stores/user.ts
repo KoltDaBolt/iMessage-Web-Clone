@@ -1,6 +1,6 @@
 import api from "@/api/api";
 import type User from "@/models/User";
-import type UserLoginCredentials from "@/models/UserLoginCredentials";
+import type UserLoginCredentials from "@/models/UserLoginFormData";
 import type UserSignupFormData from "@/models/UserSignupFormData";
 
 export const user = {
@@ -25,5 +25,8 @@ export const user = {
         async signup(ctx: any, validSignupFormData: UserSignupFormData): Promise<User | String>{
             return await api.user.register(validSignupFormData);
         }
+    },
+    getters:{
+        isAuthenticated: (state: any) => !!state.all
     }
 }
