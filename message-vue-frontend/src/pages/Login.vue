@@ -11,7 +11,7 @@
 
     const loginFormData: UserLoginFormData = reactive({
         username: "",
-        lastname: ""
+        password: ""
     });
 
     const errors = ref("");
@@ -23,29 +23,33 @@
             errors.value = user;
         }else{
             store.commit("user/setUser", user);
-            router.replace("/home");
+            let contacts = await store.dispatch("contacts/getContacts");
+            store.commit("contacts/setContacts", contacts);
+            router.replace("/messages");
         }
     }
 </script>
 
 <template>
-    <h1>Login</h1>
+    <div>
+        <h1>Login</h1>
 
-    <FloatLabel class="floatlabel-margin">
-        <label for="username">Username</label>
-        <InputText id="username" v-model="loginFormData.username" />
-    </FloatLabel>
-    <FloatLabel class="floatlabel-margin">
-        <label for="password">Password</label>
-        <Password id="password" v-model="loginFormData.password" :feedback="false" />
-    </FloatLabel>
+        <FloatLabel class="floatlabel-margin">
+            <label for="username">Username</label>
+            <InputText id="username" v-model="loginFormData.username" />
+        </FloatLabel>
+        <FloatLabel class="floatlabel-margin">
+            <label for="password">Password</label>
+            <Password id="password" v-model="loginFormData.password" :feedback="false" />
+        </FloatLabel>
 
-    <div class="floatlabel-margin">
-        <RouterLink to="/signup">
-            <Button label="New User? Sign Up Here" severity="info" outlined />
-        </RouterLink>
-        <Button label="Login" severity="info" @click.prevent="submitLoginForm()" />
+        <div class="floatlabel-margin">
+            <RouterLink to="/signup">
+                <Button label="New User? Sign Up Here" severity="info" outlined />
+            </RouterLink>
+            <Button label="Login" severity="info" @click.prevent="submitLoginForm()" />
+        </div>
+
+        <p style="color: red;" v-if="errors">{{ errors }}</p>
     </div>
-
-    <p style="color: red;" v-if="errors">{{ errors }}</p>
 </template>

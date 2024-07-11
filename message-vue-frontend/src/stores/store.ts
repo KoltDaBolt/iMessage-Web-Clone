@@ -3,6 +3,7 @@ import { user } from './user';
 
 export const store = createStore({
     modules:{
-        user
+        user,
+        contacts
     }
 })

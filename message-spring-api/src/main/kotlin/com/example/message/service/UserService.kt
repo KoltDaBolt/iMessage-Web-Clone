@@ -30,10 +30,10 @@ class UserService(
     @Transactional
     override fun registerUser(newUser: UserSignupFormData): User{
         return try{
-            val newUserId = userDao.addUser(newUser.username, newUser.password)
+            val newUsernameId = userDao.createUser(newUser.username, newUser.password)
 
-            userContactsDao.createContact(newUserId, newUserId, newUser.firstname, newUser.lastname)
-            generateKeyPair(newUser, newUserId)
+            userContactsDao.createContact(newUsernameId, newUsernameId, newUser.firstname, newUser.lastname)
+            generateKeyPair(newUser, newUsernameId)
         }catch(e: DuplicateUsernameException){
             throw DuplicateUsernameException("Username ${newUser.username} is unavailable. Please pick another.")
         }catch(e: DuplicateContactsException){
@@ -57,7 +57,7 @@ class UserService(
         )
     }
 
-    private fun generateKeyPair(newUser: UserSignupFormData, userId: Int): User{
+    private fun generateKeyPair(newUser: UserSignupFormData, userId: String): User{
         val keyPairGenerator = KeyPairGenerator.getInstance("RSA")
         keyPairGenerator.initialize(2048)
         val keyPair = keyPairGenerator.generateKeyPair()

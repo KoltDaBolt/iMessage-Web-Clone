@@ -27,15 +27,15 @@ class UserDao(val template: JdbcTemplate): IUserDao{
         }!!
     }
 
-    override fun addUser(username: String, password: String): Int{
+    override fun createUser(username: String, password: String): String{
         val createUserQuery = """
-            INSERT INTO users (username, password_hash) VALUES (?, ?) RETURNING id
+            INSERT INTO users (username, password_hash) VALUES (?, ?) RETURNING username
         """.trimIndent()
 
         return try{
             template.queryForObject(
                 createUserQuery,
-                { rs, _ -> rs.getInt("id") },
+                { rs, _ -> rs.getString("username") },
                 username,
                 password
             )

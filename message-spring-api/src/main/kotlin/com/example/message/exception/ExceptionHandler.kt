@@ -15,6 +15,10 @@ class ExceptionHandler{
     fun handleDuplicateContactsException(ex: DuplicateContactsException): ResponseEntity<String> =
         ResponseEntity.status(HttpStatus.CONFLICT).body(ex.message)
 
+    @ExceptionHandler(InvalidLoginException::class)
+    fun handleInvalidLoginException(ex: InvalidLoginException): ResponseEntity<String> =
+        ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.message)
+
     @ExceptionHandler(GenericException::class)
     fun handleGenericException(ex: GenericException): ResponseEntity<String> =
         ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.message)

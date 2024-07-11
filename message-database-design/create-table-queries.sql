@@ -14,7 +14,7 @@ CREATE TABLE users (
     registered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE keys (
+CREATE TABLE user_keys (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id VARCHAR(50),
     public_key BLOB,

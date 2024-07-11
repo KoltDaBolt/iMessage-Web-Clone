@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.queryForObject
 
 class UserKeysDao(private val template: JdbcTemplate): IUserKeysDao{
-    override fun saveKeyPair(newUser: UserSignupFormData, userId: Int, publicKey: String, privateKey: String): User {
+    override fun saveKeyPair(newUser: UserSignupFormData, userId: String, publicKey: String, privateKey: String): User {
         val insertKeysQuery = """
             INSERT INTO user_keys (user_id, public_key, private_key) VALUES (?, ?, ?) RETURNING user_id, public_key, private_key
         """.trimIndent()

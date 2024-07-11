@@ -1,5 +1,6 @@
 import api from "@/api/api";
 import type User from "@/models/User";
+import type UserLoginFormData from "@/models/UserLoginFormData";
 import type UserLoginCredentials from "@/models/UserLoginFormData";
 import type UserSignupFormData from "@/models/UserSignupFormData";
 
@@ -16,17 +17,15 @@ export const user = {
         }
     },
     actions:{
-        async getLoginCredentials(ctx: any, username: String): Promise<UserLoginCredentials | String>{
-            return await api.user.getLoginCredentials(username);
-        },
-        async login(ctx: any, username: String): Promise<User | String>{
-            return await api.user.login(username);
+        async login(ctx: any, loginFormData: UserLoginFormData): Promise<User | String>{
+            return await api.user.login(loginFormData);
         },
         async signup(ctx: any, validSignupFormData: UserSignupFormData): Promise<User | String>{
             return await api.user.register(validSignupFormData);
         }
     },
     getters:{
+        user: (state: any) => state.all,
         isAuthenticated: (state: any) => !!state.all
     }
 }

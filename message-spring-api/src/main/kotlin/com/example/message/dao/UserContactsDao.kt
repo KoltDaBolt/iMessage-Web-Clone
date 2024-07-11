@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.queryForObject
 
 class UserContactsDao(private val template: JdbcTemplate): IUserContactsDao{
-    override fun createContact(sourceId: Int, targetId: Int, firstname: String, lastname: String): Int{
+    override fun createContact(sourceId: String, targetId: String, firstname: String, lastname: String): Int{
         val createContactQuery = """
             INSERT INTO user_contacts (source_id, target_id, target_firstname, target_lastname) VALUES (?, ?, ?, ?)
         """.trimIndent()

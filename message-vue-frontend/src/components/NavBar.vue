@@ -13,8 +13,14 @@
 <template>
     <Toolbar style="margin-bottom: 1rem;">
         <template v-if="isAuthenticated" #center>
-            <Button label="Contacts" text plain />
-            <Button label="Messages" text plain />
+            <RouterLink to="/contacts">
+                <Button label="Contacts" text plain />
+            </RouterLink>
+
+            <RouterLink to="/messages">
+                <Button label="Messages" text plain />
+            </RouterLink>
+
             <RouterLink to="/profile">
                 <Button label="Profile" text plain />
             </RouterLink>
